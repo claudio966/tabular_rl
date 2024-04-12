@@ -345,8 +345,6 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
         env, num_runs=1, stepSizeAlpha=learning_rate, episodes_per_run=num_episodes,
         max_num_time_steps_per_episode=max_num_time_steps_per_episode,
         explorationProbEpsilon=explorationProbEpsilon)
-    print('stateActionValues:', stateActionValues)
-    print('rewardsQLearning:', rewardsQLearning)
 
     # print('Using Q-learning, total reward over training=',np.sum(rewardsQLearning))
     qlearning_policy = fmdp.convert_action_values_into_policy(
@@ -357,6 +355,9 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
     average_reward = np.mean(qlearning_rewards)
     stddev_reward = np.std(qlearning_rewards)
     if debug_mode:
+        print('stateActionValues:', stateActionValues)
+        print('rewardsQLearning:', rewardsQLearning)
+
         print('\nUsing Q-learning policy, average reward=',
               average_reward, ' standard deviation=', stddev_reward)
 
