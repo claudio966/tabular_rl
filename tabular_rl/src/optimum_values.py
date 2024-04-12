@@ -317,7 +317,8 @@ def compute_optimal_action_values(env: KnownDynamicsEnv,
 
 def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
                                            max_num_time_steps_per_episode=100,
-                                           num_episodes=10,
+                                           num_train_episodes=10,
+                                           num_test_episodes=10,
                                            learning_rate=0.1,
                                            explorationProbEpsilon=0.2,
                                            output_files_prefix=None,
@@ -334,7 +335,7 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
     optimum_policy = fmdp.convert_action_values_into_policy(action_values)
     optimal_rewards = fmdp.run_several_episodes(env, optimum_policy,
                                                 max_num_time_steps_per_episode=max_num_time_steps_per_episode,
-                                                num_episodes=num_episodes)
+                                                num_episodes=num_test_episodes)
     average_reward = np.mean(optimal_rewards)
     stddev_reward = np.std(optimal_rewards)
     print('\nUsing optimum policy, average reward=',
@@ -342,7 +343,7 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
 
     # learn a policy with Q-learning. Use a single run.
     stateActionValues, rewardsQLearning = fmdp.q_learning_several_episodes(
-        env, num_runs=1, stepSizeAlpha=learning_rate, episodes_per_run=num_episodes,
+        env, num_runs=1, stepSizeAlpha=learning_rate, episodes_per_run=num_train_episodes,
         max_num_time_steps_per_episode=max_num_time_steps_per_episode,
         explorationProbEpsilon=explorationProbEpsilon)
 
@@ -351,7 +352,7 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
         stateActionValues)
     qlearning_rewards = fmdp.run_several_episodes(env, qlearning_policy,
                                                   max_num_time_steps_per_episode=max_num_time_steps_per_episode,
-                                                  num_episodes=num_episodes)
+                                                  num_episodes=num_test_episodes)
     average_reward = np.mean(qlearning_rewards)
     stddev_reward = np.std(qlearning_rewards)
     if debug_mode:
