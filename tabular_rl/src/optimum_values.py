@@ -320,7 +320,8 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
                                            num_episodes=10,
                                            learning_rate=0.1,
                                            explorationProbEpsilon=0.2,
-                                           output_files_prefix=None):
+                                           output_files_prefix=None,
+                                           debug_mode=False):
     # find and use optimum policy
     env.reset()
     tolerance = 1e-10
@@ -355,21 +356,22 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
                                                   num_episodes=num_episodes)
     average_reward = np.mean(qlearning_rewards)
     stddev_reward = np.std(qlearning_rewards)
-    print('\nUsing Q-learning policy, average reward=',
-          average_reward, ' standard deviation=', stddev_reward)
+    if debug_mode:
+        print('\nUsing Q-learning policy, average reward=',
+              average_reward, ' standard deviation=', stddev_reward)
 
-    print('Check the Q-learning policy:')
-    env.pretty_print_policy(qlearning_policy)
+        print('Check the Q-learning policy:')
+        env.pretty_print_policy(qlearning_policy)
 
-    if not output_files_prefix == None:
-        with open(output_files_prefix + '_optimal.txt', 'w') as f:
-            f.write(str(optimal_rewards) + "\n")
+        if not output_files_prefix == None:
+            with open(output_files_prefix + '_optimal.txt', 'w') as f:
+                f.write(str(optimal_rewards) + "\n")
 
-        with open(output_files_prefix + '_qlearning.txt', 'w') as f:
-            f.write(str(qlearning_rewards) + "\n")
+            with open(output_files_prefix + '_qlearning.txt', 'w') as f:
+                f.write(str(qlearning_rewards) + "\n")
 
-        print("Wrote files", output_files_prefix + "_optimal.txt",
-              "and", output_files_prefix + "_qlearning.txt.")
+            print("Wrote files", output_files_prefix + "_optimal.txt",
+                  "and", output_files_prefix + "_qlearning.txt.")
 
     return optimal_rewards, qlearning_rewards
 
