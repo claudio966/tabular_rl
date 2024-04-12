@@ -375,7 +375,10 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
             print("Wrote files", output_files_prefix + "_optimal.txt",
                   "and", output_files_prefix + "_qlearning.txt.")
 
-    return optimal_rewards, qlearning_rewards
+    training_qlearning_rewards = rewardsQLearning
+    testing_qlearning_rewards = qlearning_rewards
+
+    return optimal_rewards, training_qlearning_rewards, testing_qlearning_rewards
 
 def test_dealing_with_sparsity():
     '''
