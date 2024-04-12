@@ -318,6 +318,7 @@ def compute_optimal_action_values(env: KnownDynamicsEnv,
 def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
                                            max_num_time_steps_per_episode=100,
                                            num_episodes=10,
+                                           learning_rate=0.1,
                                            explorationProbEpsilon=0.2,
                                            output_files_prefix=None):
     # find and use optimum policy
@@ -340,7 +341,7 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
 
     # learn a policy with Q-learning. Use a single run.
     stateActionValues, rewardsQLearning = fmdp.q_learning_several_episodes(
-        env, num_runs=1, episodes_per_run=num_episodes,
+        env, num_runs=1, stepSizeAlpha=learning_rate, episodes_per_run=num_episodes,
         max_num_time_steps_per_episode=max_num_time_steps_per_episode,
         explorationProbEpsilon=explorationProbEpsilon)
     print('stateActionValues:', stateActionValues)
