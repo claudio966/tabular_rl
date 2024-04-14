@@ -167,7 +167,7 @@ def run_episode(env: gym.Env, policy: np.ndarray, maxNumIterations=100, printInf
             break
     if printInfo:
         print('totalReward = ', totalReward)
-    return totalReward
+    return totalReward / maxNumIterations
 
 
 def get_unrestricted_possible_actions_per_state(env: gym.Env) -> list:
