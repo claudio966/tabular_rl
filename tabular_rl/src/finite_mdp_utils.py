@@ -167,7 +167,7 @@ def run_episode(env: gym.Env, policy: np.ndarray, maxNumIterations=100, printInf
             break
     if printInfo:
         print('totalReward = ', totalReward)
-    return totalReward / maxNumIterations
+    return totalReward
 
 
 def get_unrestricted_possible_actions_per_state(env: gym.Env) -> list:
@@ -221,7 +221,7 @@ def q_learning_episode(env: gym.Env,
         if gameOver:
             break
     # normalize rewards to facilitate comparison
-    return rewards / (numIterations+1)
+    return rewards
 
 
 def action_via_epsilon_greedy(state: int,
