@@ -132,7 +132,7 @@ def run_several_episodes(env: gym.Env, policy: np.ndarray, num_episodes=10,
     rewards = np.zeros(num_episodes)
     for e in range(num_episodes):
         rewards[e] = run_episode(env, policy, maxNumIterations=max_num_time_steps_per_episode,
-                                 printInfo=printInfo, printPostProcessingInfo=printPostProcessingInfo, seed)
+                                 printInfo=printInfo, printPostProcessingInfo=printPostProcessingInfo, seed=seed)
     return rewards
 
 
