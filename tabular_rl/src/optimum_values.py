@@ -322,7 +322,8 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
                                            learning_rate=0.1,
                                            explorationProbEpsilon=0.2,
                                            output_files_prefix=None,
-                                           debug_mode=False):
+                                           debug_mode=False,
+                                           seed=False):
     # find and use optimum policy
     env.reset()
     tolerance = 1e-10
@@ -335,7 +336,7 @@ def compare_q_learning_with_optimum_policy(env: KnownDynamicsEnv,
     optimum_policy = fmdp.convert_action_values_into_policy(action_values)
     optimal_rewards = fmdp.run_several_episodes(env, optimum_policy,
                                                 max_num_time_steps_per_episode=max_num_time_steps_per_episode,
-                                                num_episodes=num_test_episodes)
+                                                num_episodes=num_test_episodes, seed=seed)
     average_reward = np.mean(optimal_rewards)
     stddev_reward = np.std(optimal_rewards)
     print('\nUsing optimum policy, average reward=',
