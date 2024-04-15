@@ -123,13 +123,16 @@ def get_uniform_policy_for_fully_connected(S: int, A: int) -> np.ndarray:
     return policy
 
 
-def run_several_episodes(env: gym.Env, policy: np.ndarray, num_episodes=10, max_num_time_steps_per_episode=100, printInfo=False, printPostProcessingInfo=False) -> np.ndarray:
+def run_several_episodes(env: gym.Env, policy: np.ndarray, num_episodes=10, 
+        max_num_time_steps_per_episode=100, 
+        printInfo=False, printPostProcessingInfo=False,
+        seed=False) -> np.ndarray:
     '''
     Runs num_episodes episodes and returns their rewards.'''
     rewards = np.zeros(num_episodes)
     for e in range(num_episodes):
         rewards[e] = run_episode(env, policy, maxNumIterations=max_num_time_steps_per_episode,
-                                 printInfo=printInfo, printPostProcessingInfo=printPostProcessingInfo)
+                                 printInfo=printInfo, printPostProcessingInfo=printPostProcessingInfo, seed)
     return rewards
 
 
