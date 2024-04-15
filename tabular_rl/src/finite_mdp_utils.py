@@ -248,7 +248,7 @@ def action_via_epsilon_greedy(state: int,
         return np.random.choice(possible_actions_per_state[state])
     else:
         # exploit, choosing an action with maximum value
-        return action_greedy(state, stateActionValues, possible_actions_per_state, run_faster=run_faster, seed=seed)
+        return action_greedy(state, stateActionValues, possible_actions_per_state, run_faster=run_faster)
 
 
 def action_greedy(state: int,
