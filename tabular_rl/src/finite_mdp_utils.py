@@ -211,13 +211,16 @@ def q_learning_episode(env: gym.Env,
     '''
     env.reset()
     currentState = env.get_state()
+
+    if seed:
+        random.seed(1984)
+
     rewards = 0.0
     for numIterations in range(max_num_time_steps):
         currentAction = action_via_epsilon_greedy(currentState, stateActionValues,
                                                   possible_actions_per_state,
                                                   explorationProbEpsilon=explorationProbEpsilon,
-                                                  run_faster=False,
-                                                  seed=seed)
+                                                  run_faster=False)
 
         newState, reward, gameOver, history = env.step(currentAction)
         rewards += reward
@@ -235,8 +238,7 @@ def q_learning_episode(env: gym.Env,
 def action_via_epsilon_greedy(state: int,
                               stateActionValues: np.ndarray,
                               possible_actions_per_state: list,
-                              explorationProbEpsilon=0.01, run_faster=False,
-                              seed=False) -> int:
+                              explorationProbEpsilon=0.01, run_faster=False) -> int:
     '''
     Choose an action based on epsilon greedy algorithm.
     '''
@@ -252,8 +254,7 @@ def action_via_epsilon_greedy(state: int,
 def action_greedy(state: int,
                   stateActionValues: np.ndarray,
                   possible_actions_per_state: list,
-                  run_faster=False,
-                  seed=False) -> int:
+                  run_faster=False) -> int:
     '''
     Greedly choose an action with maximum value.
     '''
@@ -264,8 +265,6 @@ def action_greedy(state: int,
         # or choose an invalid option
         max_index = np.argmax(values_for_given_state)
     else:
-        if seed:
-            random.seed(1984)
         actions_for_given_state = possible_actions_per_state[state]
         # make sure the action is valid, but keeping invalid actions with value=-infinity
         valid_values_for_given_state = -np.Inf * \
