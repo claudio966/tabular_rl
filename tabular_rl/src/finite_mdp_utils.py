@@ -133,7 +133,7 @@ def run_several_episodes(env: gym.Env, policy: np.ndarray, num_episodes=10, max_
     return rewards
 
 
-def run_episode(env: gym.Env, policy: np.ndarray, maxNumIterations=100, printInfo=False, printPostProcessingInfo=False) -> int:
+def run_episode(env: gym.Env, policy: np.ndarray, maxNumIterations=100, printInfo=False, printPostProcessingInfo=False, seed=False) -> int:
     '''
     Reset and runs a complete episode for the environment env according to
     the specified policy.
@@ -141,6 +141,9 @@ def run_episode(env: gym.Env, policy: np.ndarray, maxNumIterations=100, printInf
     valid actions, so we do not worry about it (we do not need to invoke
     methods such as @choose_epsilon_greedy_action)
     '''
+    if seed:
+        random.seed(1984)
+
     env.reset()
     s = env.get_state()
     totalReward = 0
