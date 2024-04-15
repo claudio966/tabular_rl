@@ -235,7 +235,7 @@ def q_learning_episode(env: gym.Env,
 def action_via_epsilon_greedy(state: int,
                               stateActionValues: np.ndarray,
                               possible_actions_per_state: list,
-                              explorationProbEpsilon=0.01, run_faster=False
+                              explorationProbEpsilon=0.01, run_faster=False,
                               seed=False) -> int:
     '''
     Choose an action based on epsilon greedy algorithm.
