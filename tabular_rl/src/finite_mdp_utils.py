@@ -240,22 +240,20 @@ def action_via_epsilon_greedy(state: int,
     '''
     Choose an action based on epsilon greedy algorithm.
     '''
-    
-    if seed:
-        np.random.seed(1984)
 
     if np.random.binomial(1, explorationProbEpsilon) == 1:
         # explore among valid options
         return np.random.choice(possible_actions_per_state[state])
     else:
         # exploit, choosing an action with maximum value
-        return action_greedy(state, stateActionValues, possible_actions_per_state, run_faster=run_faster)
+        return action_greedy(state, stateActionValues, possible_actions_per_state, run_faster=run_faster, seed=seed)
 
 
 def action_greedy(state: int,
                   stateActionValues: np.ndarray,
                   possible_actions_per_state: list,
-                  run_faster=False) -> int:
+                  run_faster=False,
+                  seed=False) -> int:
     '''
     Greedly choose an action with maximum value.
     '''
@@ -266,6 +264,8 @@ def action_greedy(state: int,
         # or choose an invalid option
         max_index = np.argmax(values_for_given_state)
     else:
+        if seed:
+            np.random.seed(1984)
         actions_for_given_state = possible_actions_per_state[state]
         # make sure the action is valid, but keeping invalid actions with value=-infinity
         valid_values_for_given_state = -np.Inf * \
