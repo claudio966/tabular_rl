@@ -265,7 +265,7 @@ def action_greedy(state: int,
         max_index = np.argmax(values_for_given_state)
     else:
         if seed:
-            np.random.seed(1984)
+            random.seed(1984)
         actions_for_given_state = possible_actions_per_state[state]
         # make sure the action is valid, but keeping invalid actions with value=-infinity
         valid_values_for_given_state = -np.Inf * \
@@ -275,7 +275,7 @@ def action_greedy(state: int,
         # Use numpy.where to get all indices where the array is equal to its maximum value
         all_max_indices = np.where(
             valid_values_for_given_state == max_value)[0]
-        max_index = np.random.choice(all_max_indices)
+        max_index = random.choices(all_max_indices, k=1)[0]
     return max_index
 
 
