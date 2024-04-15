@@ -195,7 +195,7 @@ def q_learning_episode(env: gym.Env,
                        stateActionValues: np.ndarray,
                        possible_actions_per_state: list,
                        max_num_time_steps=100, stepSizeAlpha=0.1,
-                       explorationProbEpsilon=0.01, discountGamma=0.9) -> int:
+                       explorationProbEpsilon=0.01, discountGamma=0.9, seed=False) -> int:
     '''    
     An episode with Q-Learning. We reset the environment.
     Note stateActionValues is not reset within this method, and can be already initialized.
@@ -216,7 +216,8 @@ def q_learning_episode(env: gym.Env,
         currentAction = action_via_epsilon_greedy(currentState, stateActionValues,
                                                   possible_actions_per_state,
                                                   explorationProbEpsilon=explorationProbEpsilon,
-                                                  run_faster=False)
+                                                  run_faster=False,
+                                                  seed=seed)
 
         newState, reward, gameOver, history = env.step(currentAction)
         rewards += reward
@@ -234,10 +235,15 @@ def q_learning_episode(env: gym.Env,
 def action_via_epsilon_greedy(state: int,
                               stateActionValues: np.ndarray,
                               possible_actions_per_state: list,
-                              explorationProbEpsilon=0.01, run_faster=False) -> int:
+                              explorationProbEpsilon=0.01, run_faster=False
+                              seed=False) -> int:
     '''
     Choose an action based on epsilon greedy algorithm.
     '''
+    
+    if seed:
+        np.random.seed(1984)
+
     if np.random.binomial(1, explorationProbEpsilon) == 1:
         # explore among valid options
         return np.random.choice(possible_actions_per_state[state])
@@ -278,7 +284,7 @@ def q_learning_several_episodes(env: gym.Env,
                                 max_num_time_steps_per_episode=10,
                                 num_runs=1,
                                 stepSizeAlpha=0.1, explorationProbEpsilon=0.01,
-                                possible_actions_per_state=None, verbosity=1) -> tuple[np.ndarray, np.ndarray]:
+                                possible_actions_per_state=None, verbosity=1, seed=False) -> tuple[np.ndarray, np.ndarray]:
     '''Use independent runs instead of a single run.
     Increase num_runs if you want smooth numbers representing the average.
     @return tuple with stateActionValues corresponding to best average rewards among all runs
@@ -310,7 +316,8 @@ def q_learning_several_episodes(env: gym.Env,
                                         possible_actions_per_state,
                                         max_num_time_steps=max_num_time_steps_per_episode,
                                         stepSizeAlpha=stepSizeAlpha,
-                                        explorationProbEpsilon=explorationProbEpsilon)
+                                        explorationProbEpsilon=explorationProbEpsilon,
+                                        seed=seed)
             rewardsQLearning[i] += reward
             sum_rewards_this_run += reward
         average_reward_this_run = sum_rewards_this_run / episodes_per_run
